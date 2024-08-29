@@ -77,6 +77,8 @@ load_data = load_data.merge(weather_data, how='left', left_on=['Local Time', 'Zo
                             right_on=['Local Time', 'Zone']).set_index('Local Time')
 
 load_data = pd.pivot(load_data, columns='Zone')
+load_data = load_data.resample('5min').first()
+load_data = load_data.ffill()
 load_data.columns = load_data.columns.swaplevel()
 
 filenames = {
